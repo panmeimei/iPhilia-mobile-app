@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, width=device-width" />
+       
+        <title>iPhilia Mobile</title>
+        <link rel="stylesheet" href="css/layout.css" />
+		<link rel="stylesheet" href="css/iPhiliaMobile.min.css" />		
+		<link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
+		<link rel="stylesheet" href="css/jquery.mobile.structure-1.4.3.min.css" />
+		<script src="lib/jquery-1.11.1.min.js"></script>
+		<script src="lib/jquery.mobile-1.4.3.min.js"></script>
+		<script src="lib/underscore-min.js"></script>
+        <script src="lib/backbone-min.js"></script>
+        <script src="lib/PushNotification.js"></script>
+    </head>
+    <body>
+   	 	<script id="bibleStudyTemplate" type="text/template">			
+			<h2>Upcoming Bible Study</h2>
+			<h1><%= date %></h1>	
+			<p style="width:20em; margin: 0 auto;">Our bible study is held every two weeks. Our host family <%= host %> will 
+			 kindly prepare delicious dinner and provide space for iPhilia young adults. 
+			We are warmly welcome your join.</p>
+					   
+	   </script>
+	   <script id="bibleStudyTemplate2" type="text/template">			
+		  <h2>We will meet you here!</h2>	 
+		  <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC93IlFMRZNCIOb5cx1qMHAkceVeiRBtTk&q=<%= googleAddr %>&zoom=15"></iframe>									   
+	   	  <div>address: <%= street %>, <%= city %>, <%= state %></div>
+	   </script>
+	   <script id="bibleStudyTemplate3" type="text/template">	
+			<h2>Are going to join us?</h2>
+			<em>Reply by <%= replyBy %>	</em>
+			<p>Contact our host family for details: <%= phone %></p>	
+			<div class='margin5'>
+	    		<a data-rsvp='yes' class='rsvp-btn ui-btn ui-btn-inline ui-corner-all'>Yes, see you there.</a>
+			<a  data-rsvp='no' class='rsvp-btn ui-btn ui-btn-inline ui-corner-all'>Sorry I can't make it.</a></br>	
+		   	</div>
+					   
+	   </script>
+	   <script id="eventTemplate" type="text/template">
+			<button class='ui-btn ui-shadow ui-corner-all'><%= eventTitle %></br><%= eventTime%></button>
+	   </script>
+       <!-- Log In Page -->
+	<div data-role="page" id="login-page" data-theme="a">
+		<div data-role="header" data-position="inline">		
+			<a id="join-btn" href="#signup-page" data-transition="slidedown" data-rel="dialog" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-user">Join us</a>
+		</div>
+		<div id='icon'>
+			<h1>iPhilia</h1>
+			<p>A Catholic young adult group at Fremont, CA</p>
+		</div>
+		<div class="content" data-role="content" >
+				<form>	    
+				    <input id="login-email" name="account_name" type="email" data-clear-btn="true" placeholder="Email" value="silvia@gmail.com"/>				    
+				    <input id="login-pwd" name="pwd" type="password" placeholder="Password" value="1234"/>
+				</form>
+		
+				<button id="login-submit" class="ui-shadow ui-btn" data-theme="a">Login</button>
+				<div data-role="popup" id="login-error-msg" class="ui-content" style="max-width:280px">
+				    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+				<p>Email or password doesn't match.</p>
+				</div>
+		</div>
+	</div>
+	
+	<!-- Sign Up Page -->
+	<div data-role="page" id="signup-page" data-theme="a">
+		<div data-role="header" data-position="inline">
+			<h1>Sign Up</h1>
+			
+		</div>
+		<div id="signup-content" class="content" data-role="content" data-theme="a">
+			
+				<form>
+					<label for="first_name" data-clear-btn="true"><strong>First name:</strong></label>
+				    <input id="fname" name="first_name" type="text" data-clear-btn="true"/>
+				    <label for="last_name" data-clear-btn="true"><strong>Last name:</strong></label>
+				    <input id="lname" name="last_name" type="text" data-clear-btn="true"/>
+				    <label for="phone_num" data-clear-btn="true"><strong>Phone number:</strong></label>
+				    <input id="phone" name="phone_num" type="text" data-clear-btn="true" placeholder="123-456-789"/>
+				    <label for="account_name" data-clear-btn="true"><strong>Email:</strong></label>
+				    <input id="signup-email" name="account_name" type="email" data-clear-btn="true" placeholder="name@gmail.com"/>
+				    <label for="pwd"><strong>Password:</strong></label>
+				    <input id="signup-pwd" name="pwd" type="password"/>
+				</form>			
+				<button id="signup-submit" class="ui-shadow ui-btn" data-theme="a">Sign Up</button>	
+				</div>
+		</div>
+	</div>
+	<!-- Main Page -->
+		
+	<div data-role="page" id="main-page" data-theme="a">
+		<!-- Navigation Panel -->
+		<!--div data-role="panel" id="navi-panel" data-display="reveal" data-theme="a">
+			<div data-role="header" data-position="inline">
+				<h1>Menu</h1>
+				
+				<a href='#main-page' data-rel="close">Close</a>
+			</div>
+			
+			<ul id="navi-list" data-role="listview" data-inset="true" data-theme="b">
+			    <li data-role="list-divider">place holder</li>
+			    <li><a href="#bible-study">Bible Study Schedule</a></li>
+			    <li><a href="#ido">iDo</a></li>	  
+			    <li><a href="#prayer">Prayer</a></li>
+			</ul>
+		</div-->
+		<div data-role="header" data-position="inline">
+			<h1>iPhilia</h1>
+			<!-- a href="#navi-panel" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-bars">Menu</a-->
+			<a id="logout-btn" href="#login-page" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-user">Log Out</a>
+			
+		</div>
+		
+		<div class="content" data-role="content">			
+			<section id='bible-study'>	
+				<div class='ui-nodisc-icon'>
+					<a href="#" id='bible-next' class="swipe ui-btn ui-alt-icon ui-corner-all ui-icon-carat-r ui-btn-icon-notext ui-btn-inline">Next</a>
+					<a href="#" id='bible-prev' class="swipe ui-btn ui-alt-icon ui-corner-all ui-icon-carat-l ui-btn-icon-notext ui-btn-inline">Prev</a>		
+				</div>
+				<div class='slider-wrapper'>
+					<ul id='bible-slider'></ul>
+      			</div>	
+				
+			</section>
+			<section id="event-sec">
+				 <h1>Your Events</h1>
+				 <div id='event-list' class='event-grid' >
+				   
+				 </div>
+				
+			</section>	
+			<section id='ido'>
+				<h1>iGo</h1>
+				<!-- div class='ui-nodisc-icon'>
+					<a href="#" id='btn-next' class="swipe ui-btn ui-alt-icon ui-corner-all ui-icon-carat-r ui-btn-icon-notext ui-btn-inline">Next</a>
+					<a href="#" id='btn-prev' class="swipe ui-btn ui-alt-icon ui-corner-all ui-icon-carat-l ui-btn-icon-notext ui-btn-inline">Prev</a>		
+				</div>
+				<div class='slider-wrapper'>
+					<ul id ='slider'>
+						<li>1</li>
+						<li>2</li>
+						<li>3</li>
+					</ul>
+				</div-->
+			</section>
+			<section id='prayer'><h1>We Pray</h1></section>		
+		</div>
+	</div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/models/bibleModel.js"></script>       
+        <script type="text/javascript" src="js/views/bibleView.js"></script>
+        <script type="text/javascript" src="js/views/iGoView.js"></script>
+        <script type="text/javascript" src="js/views/eventView.js"></script>
+        <script type="text/javascript" src="js/collections/bibleCollection.js"></script>
+        <script type="text/javascript" src="js/users.js"></script>
+        <script type="text/javascript" src="js/slider.js"></script>
+    </body>
+</html>
