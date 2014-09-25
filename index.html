@@ -16,7 +16,7 @@
 		<script src="lib/jquery.mobile-1.4.3.min.js"></script>
 		<script src="lib/underscore-min.js"></script>
         <script src="lib/backbone-min.js"></script>
-        <script src="lib/PushNotification.js"></script>
+        <!-- script src="lib/PushNotification.js"></script-->
     </head>
     <body>
    	 	<script id="bibleStudyTemplate" type="text/template">			
@@ -43,7 +43,39 @@
 					   
 	   </script>
 	   <script id="eventTemplate" type="text/template">
-			<button class='ui-btn ui-shadow ui-corner-all'><%= eventTitle %></br><%= eventTime%></button>
+			<a href="#event-detail-page" data-transition='slide' class='event-btn ui-btn ui-shadow ui-corner-all' data-id=<%= eventId %>>
+				<img alt='bible event' src='http://media-cache-ec0.pinimg.com/736x/4d/15/bf/4d15bf89268e28d7af23a89cf122735a.jpg'></img>
+				<p><%= eventTitle %><br>
+				<%= eventTime%></p>
+			</a>
+	   </script>
+	   <script id="eventDetailTemplate" type="text/template">
+	   		<div class='event-pic'>
+				<h2 class='event-title'><%= eventTitle%></h2>				
+			</div>
+			<div class='event-detail'>				
+				<div class='description'>Bring your bible, let's practice the wisdom of God.</div>
+				<div><hr></div>
+				<div class='event-time ui-grid-b'>
+					<div class='ui-block-a'>Time</div>
+					<div><%= eventTime%></div>
+				</div>
+				<div><hr></div>
+				<div class='event-address ui-grid-b'>
+					<div class='ui-block-a'>Location</div>
+					<div><%= street %>, <%= city %>, <%= state %> <%= zipCode%></div>
+				</div>
+				<div><hr></div>
+				<div class='event-host ui-grid-b'>
+					<div class='ui-block-a'>Event host</div>
+					<div><%= eventHost %></div>
+				</div>
+				<div><hr></div>
+			</div>
+			<div class='event-map'>
+				<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC93IlFMRZNCIOb5cx1qMHAkceVeiRBtTk&q=<%= googleAddr %>&zoom=15"></iframe>
+			</div>	
+	   
 	   </script>
        <!-- Log In Page -->
 	<div data-role="page" id="login-page" data-theme="a">
@@ -54,7 +86,7 @@
 			<h1>iPhilia</h1>
 			<p>A Catholic young adult group at Fremont, CA</p>
 		</div>
-		<div class="content" data-role="content" >
+		<div class="ui-content">
 				<form>	    
 				    <input id="login-email" name="account_name" type="email" data-clear-btn="true" placeholder="Email" value="silvia@gmail.com"/>				    
 				    <input id="login-pwd" name="pwd" type="password" placeholder="Password" value="1234"/>
@@ -71,11 +103,9 @@
 	<!-- Sign Up Page -->
 	<div data-role="page" id="signup-page" data-theme="a">
 		<div data-role="header" data-position="inline">
-			<h1>Sign Up</h1>
-			
+			<h1>Sign Up</h1>			
 		</div>
-		<div id="signup-content" class="content" data-role="content" data-theme="a">
-			
+		<div id="signup-content" class="ui-content" data-theme="a">			
 				<form>
 					<label for="first_name" data-clear-btn="true"><strong>First name:</strong></label>
 				    <input id="fname" name="first_name" type="text" data-clear-btn="true"/>
@@ -117,7 +147,7 @@
 			
 		</div>
 		
-		<div class="content" data-role="content">			
+		<div class="ui-content" >			
 			<section id='bible-study'>	
 				<div class='ui-nodisc-icon'>
 					<a href="#" id='bible-next' class="swipe ui-btn ui-alt-icon ui-corner-all ui-icon-carat-r ui-btn-icon-notext ui-btn-inline">Next</a>
@@ -129,7 +159,7 @@
 				
 			</section>
 			<section id="event-sec">
-				 <h1>Your Events</h1>
+				 <h1>My Events</h1>
 				 <div id='event-list' class='event-grid' >
 				   
 				 </div>
@@ -151,6 +181,14 @@
 			</section>
 			<section id='prayer'><h1>We Pray</h1></section>		
 		</div>
+	</div>
+	<!-- Event Detail Page -->		
+	<div data-role="page" id="event-detail-page" data-theme="a">
+		<div data-role="header" >
+			<h1>Event Information</h1>
+			<a href='#main-page' data-rel='back' class="ui-btn-left ui-btn ui-icon-arrow-l ui-btn-icon-left ui-btn-inline ui-corner-all" data-role="button" role="button">Back</a>		
+		</div>		
+		<div class="ui-content"></div>
 	</div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
