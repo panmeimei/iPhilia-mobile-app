@@ -5,7 +5,7 @@
  */
 var sync = Backbone.sync;
 var app = app||{};
-var renderRsvpView=true;
+var renderRsvpView = null;
 /*Backbone.sync is call whenever model transaction occurs. Therefore, override
  * beforeSend here is better than override it in each Ajax functions*/
 Backbone.sync = function(method,model,options){
@@ -56,6 +56,7 @@ app.BibleSectionView = Backbone.View.extend({
 		});				
 	},
 	render: function(){
+		renderRsvpView=true;
 		//set renderRsvpView to false if user has replied to the event		
 		if( this.attendee.length)
 			renderRsvpView = false;	
