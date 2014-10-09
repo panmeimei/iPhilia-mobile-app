@@ -3,8 +3,6 @@
  */
 $(document).ready(function(){
 	if(localStorage.getItem("email")){
-		$('#login-pwd').val(localStorage.getItem('pwd'));
-		$('#login-email').val(localStorage.getItem('email'));
 		LogIn();
 	}
 	$("#login-submit").click(LogIn);
@@ -74,7 +72,6 @@ var LogIn = function(){
 	    user = new User(json.firstname, json.lastname, json.objectId);	    
 	    app.initialize(user);
 	    localStorage.setItem("email", json.email);
-	    localStorage.setItem("pwd", json.password);
 		window.location.replace("#main-page");
 	};
 };
