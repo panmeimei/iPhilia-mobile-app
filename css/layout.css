@@ -25,6 +25,17 @@ h1{
 #login-page #icon, #main-page .ui-content{	
 	text-align:center;
 }
+/*Login page*/
+#login-page > .ui-content{
+	padding:2em;
+}
+/*Signup page*/
+#signup-page .ui-content{
+	padding:2em;
+}
+#login-error-msg.ui-content{
+	padding:1em;
+}
 /*Bible section*/
 iframe{	
 	width:100%;

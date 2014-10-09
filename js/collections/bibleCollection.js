@@ -14,7 +14,7 @@ app.BibleCollection = Backbone.Collection.extend({
 		return response.results;
 	}
 });
-AttendeeCollection = Backbone.Collection.extend({
+app.AttendeeCollection = Backbone.Collection.extend({
 	model: app.Attendee,
 	url: "https://api.parse.com/1/classes/AttendeeList",
 	parse:function(response){
@@ -23,7 +23,10 @@ AttendeeCollection = Backbone.Collection.extend({
 });
 app.UserCollection = Backbone.Collection.extend({
 	model: app.User,
-	url:"https://api.parse.com/1/users"
+	url:"https://api.parse.com/1/users",
+	parse:function(response){
+		return response.results;
+	}
 });
 
-app.Attendees = new AttendeeCollection();
+//app.Attendees = new AttendeeCollection();

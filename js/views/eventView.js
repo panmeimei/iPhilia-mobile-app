@@ -10,8 +10,8 @@ app.EventsView = Backbone.View.extend({
 	},
 	initialize:function(){
 		_.bindAll(this, 'render', 'renderEach' );			
-		//this.collection = new app.AttendeeCollection();
-		app.Attendees.fetch({
+		app.userEvents = new app.AttendeeCollection();
+		app.userEvents.fetch({
 			reset:true,
 			data: {
 				/*constrain should be done on server, it's inefficient to load whole table of data*/
@@ -27,7 +27,7 @@ app.EventsView = Backbone.View.extend({
 			error:function(err){console.log('error/backone  '+err);}
 		});
 		//render an event when new event is replied
-		this.listenTo(app.Attendees, 'add', this.addEvent);
+		app.userEvents.on( 'add', this.addEvent, this);
 		
 	},	
 	displayEventDetail: function(event){		
@@ -42,7 +42,7 @@ app.EventsView = Backbone.View.extend({
 	},
 	render: function(){
 		this.$el.html('');
-		_.each(app.Attendees.models, function(model){
+		_.each(app.userEvents.models, function(model){
 			this.renderEach(model);
 		},this);
 	/*	_.each(this.collection.models[0].attributes.results,function(model){

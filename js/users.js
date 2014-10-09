@@ -2,11 +2,17 @@
  * Account management 
  */
 $(document).ready(function(){
+	if(localStorage.getItem("email")){
+		$('#login-pwd').val(localStorage.getItem('pwd'));
+		$('#login-email').val(localStorage.getItem('email'));
+		LogIn();
+	}
 	$("#login-submit").click(LogIn);
 	$("#signup-submit").click(SignUp);
 	$("#logout-btn").click(function(){
 		$('#login-pwd').val('');
-		$('#login-email').val('');
+		$('#login-email').val(localStorage.getItem('email'));
+		localStorage.removeItem("email");
 	});
 	$('#join-btn').click(function(){
 		$('#signup-pwd').val('');
@@ -45,22 +51,6 @@ var SignUp = function(){
 	
 };
 
-/*var GetAll = function(){
-	$.ajax({
-		type: "GET",
-		url:"https://api.parse.com/1/users",
-		headers:{
-			"X-Parse-Application-Id":"F6Scp43NZm8qJ8VSEDzEIysry1IgELJPz5u6xzxx",
-			"X-Parse-REST-API-Key":"bpTWYs0PgiR5TC16zV1gBHOzAHOgaS9bD1N3QauY"
-		},	
-		dataType: "json",
-		contentType: "application/json",
-		success:successCallBack,
-		error: function(){console.log("something wrong...");},
-		complete: function(){console.log("request complete");}
-	});
-	
-};*/
 var LogIn = function(){
 	$.ajax({
 		type: "GET",
@@ -81,11 +71,10 @@ var LogIn = function(){
 	});
 	
 	function prepProfile(json){
-		//console.log(json);
-	    user = new User(json.firstname, json.lastname, json.objectId);
-	    
+	    user = new User(json.firstname, json.lastname, json.objectId);	    
 	    app.initialize(user);
-	    
+	    localStorage.setItem("email", json.email);
+	    localStorage.setItem("pwd", json.password);
 		window.location.replace("#main-page");
 	};
 };

@@ -4,11 +4,11 @@
  */
 var app = app||{};
 app.BibleStudySchedule = Backbone.Model.extend({
-	idAttribute:"objectId"
+	idAttribute:"objectId",
 });
 
 app.Attendee = Backbone.Model.extend({
-	idAttribute:"objectId",
+	idAttribute:"objectId"
 });
 
 app.User = Backbone.Model.extend({

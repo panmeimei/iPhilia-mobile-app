@@ -3,19 +3,9 @@
  *
  *display bible study information
  */
-var sync = Backbone.sync;
 var app = app||{};
 var renderRsvpView = null;
-/*Backbone.sync is call whenever model transaction occurs. Therefore, override
- * beforeSend here is better than override it in each Ajax functions*/
-Backbone.sync = function(method,model,options){
-	options.beforeSend = function(xhr){
-		xhr.setRequestHeader("X-Parse-Application-Id","F6Scp43NZm8qJ8VSEDzEIysry1IgELJPz5u6xzxx");
-		xhr.setRequestHeader("X-Parse-REST-API-Key","bpTWYs0PgiR5TC16zV1gBHOzAHOgaS9bD1N3QauY");
-	};
-//	alert(method+' '+ JSON.stringify(model));
-	sync(method,model,options);
-};
+
 /*Render all contents in the bible study section.
  * 3 parts in the section: time, location and RSVP.
  * workflow: 
@@ -38,14 +28,15 @@ app.BibleSectionView = Backbone.View.extend({
 			       }, 
 			
 			success:this.fetchResponse,
-			error:function(err){console.log('error/backone  '+err);}
+			error:function(err){console.log('error/backone  '+err);},
+
 		});				
 	},
-/*Query 'AttendeeList' table see if any record matches userId and eventId*/
+/*Query 'AttendeeList' to see if any record matches userId and eventId*/
 	fetchResponse:function(){
-		this.eventId = this.collection.models[0].get('objectId');
-		this.attendee = new AttendeeCollection();
-		this.attendee.fetch({
+		this.eventId = this.collection.at(0).get('objectId');
+		this.attendees = new app.AttendeeCollection();
+		this.attendees.fetch({
 			reset:true,
 			data: {
 				/*constrain should be done on server, it's inefficient to load whole table of data*/
@@ -58,14 +49,14 @@ app.BibleSectionView = Backbone.View.extend({
 	render: function(){
 		renderRsvpView=true;
 		//set renderRsvpView to false if user has replied to the event		
-		if( this.attendee.length)
+		if( this.attendees.length)
 			renderRsvpView = false;	
 		$('#bible-slider').html('');	
 			//_.each(list, iterator, [context])
-		_.each(this.collection.models, function(model){		
+	/*	_.each(this.collection.models, function(model){		
 				this.renderEach(model);//in query constraint, only one result will be returned		
-			},this);
-	
+			},this);*/
+		this.renderEach(this.collection.at(0));
 		//this.eventId = this.collection.models[0].get('objectId');			
 	},
 	renderEach: function(item){
@@ -88,8 +79,7 @@ app.DateView = Backbone.View.extend({
 	template: _.template($('#bibleStudyTemplate').html()),	
 	render: function(){
 		//need to parse date and street before rendering
-		var date = parseDate(this.model.get('date').iso);
-		
+		var date = parseDate(this.model.get('date').iso);		
 		this.$el.html(this.template({				
 			date: date[0]+'  '+date[1],
 			host: this.model.get('host'),					
@@ -128,7 +118,7 @@ app.RsvpView = Backbone.View.extend({
 	/*add the user to AttendeeList*/
 	addAttendee: function(event){
 		//trigger EventsView's 'add' event
-		app.Attendees.create({
+		app.userEvents.create({
 			eventId:this.model.get('objectId'),
 			eventTitle: 'Bible Study',
 			eventTime: this.model.get('date'),
