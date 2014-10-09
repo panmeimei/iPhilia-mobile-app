@@ -2,11 +2,20 @@
 <widget id="com.phonegap.helloworld" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>iPhilia Mobile</name>
     <description>
-        A mobile app to uinite young adults for Catholic community
+        A mobile app to unite young adults for Catholic community
     </description>
     <author email="pretend15@gmail.com" href="">
         iPhilia mobile team
     </author>
+   
+    <widget xmlns       = "http://www.w3.org/ns/widgets"
+		    xmlns:gap       = "http://phonegap.com/ns/1.0"
+		    xmlns:android   = "http://schemas.android.com/apk/res/android"
+		    id              = "com.lumberg.greeeaaat"
+		    version         = "1.0.0">
+    <gap:config-file platform="android" parent="/manifest/application">
+        <activity android:screenOrientation="portrait" android:configChanges="orientation"/>
+    </gap:config-file>
     <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="3.5.0" />
     <preference name="target-device" value="universal" />
@@ -22,8 +31,6 @@
     <preference name="disable-cursor" value="false" />
     <preference name="android-targetSdkVersion" value="16" />
     <preference name="android-installLocation" value="auto" />
-    <gap:plugin name="com.pushwoosh.plugins.pushwoosh" version="3.0.2" />
-    
     <gap:plugin name="org.apache.cordova.battery-status" />
     <gap:plugin name="org.apache.cordova.camera" />
     <gap:plugin name="org.apache.cordova.media-capture" />
