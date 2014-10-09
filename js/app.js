@@ -23,9 +23,15 @@ var app = {
 			new app.EventsView();	
 		},
 		bindEvents: function(){
-			document.addEventListener('deviceready', this.onDeviceReady, false);
+			document.addEventListener('deviceready', this.onDeviceReady, false);		
 		},
 		onDeviceReady: function(){
-					
-		}
+			document.addEventListener('backbutton', this.onBackKeyDown, false);		
+		},
+		onBackKeyDown: function(){
+			if($.mobile.activePage[0].id === 'login-page'){
+				navigator.app.exitApp();
+			}
+		},
+		
 };

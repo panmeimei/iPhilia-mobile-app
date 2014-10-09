@@ -29,4 +29,3 @@ app.UserCollection = Backbone.Collection.extend({
 	}
 });
 
-//app.Attendees = new AttendeeCollection();

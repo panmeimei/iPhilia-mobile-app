@@ -2,6 +2,7 @@
  * Account management 
  */
 $(document).ready(function(){
+	//auto login when user's information still exists
 	if(localStorage.getItem("email")){
 		LogIn();
 	}
@@ -39,7 +40,7 @@ var SignUp = function(){
 				}),
 		dataType: "json",
 		contentType: "application/json",
-		success: function(){ window.location.replace("#login-page");},
+		success: function(){$.mobile.navigate("#login-page", {info: "going to #login-page"});},
 		error: function(jqXHR, textStatus, errorThrown){
 			console.log("something wrong..."+errorThrown);
 			
@@ -72,7 +73,7 @@ var LogIn = function(){
 	    user = new User(json.firstname, json.lastname, json.objectId);	    
 	    app.initialize(user);
 	    localStorage.setItem("email", json.email);
-		window.location.replace("#main-page");
+		$.mobile.navigate("#main-page", {info: "going to #main-page"});
 	};
 };
 
