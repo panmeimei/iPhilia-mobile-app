@@ -83,12 +83,13 @@
 			<a id="join-btn" href="#signup-page" data-transition="slidedown" data-rel="dialog" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-user">Join us</a>
 		</div>
 		<div id='icon'>
+			<img alt="" src="icon.png">
 			<h1>iPhilia</h1>
 			<p>A Catholic young adult group at Fremont, CA</p>
 		</div>
 		<div class="ui-content">
 				<form>	    
-				    <input id="login-email" name="account_name" type="email" data-clear-btn="true" placeholder="Email" value="silvia@gmail.com"/>				    
+				    <input id="login-email" name="account_name" type="email" data-clear-btn="true" placeholder="Email" value="silvia@gmail.com" autofocus/>				    
 				    <input id="login-pwd" name="pwd" type="password" placeholder="Password" value="1234"/>
 				</form>
 		
@@ -108,15 +109,15 @@
 		<div id="signup-content" class="ui-content" data-theme="a">			
 				<form>
 					<label for="first_name" data-clear-btn="true"><strong>First name:</strong></label>
-				    <input id="fname" name="first_name" type="text" data-clear-btn="true"/>
+				    <input id="fname" name="first_name" type="text" data-clear-btn="true" autofocus required/>
 				    <label for="last_name" data-clear-btn="true"><strong>Last name:</strong></label>
-				    <input id="lname" name="last_name" type="text" data-clear-btn="true"/>
+				    <input id="lname" name="last_name" type="text" data-clear-btn="true" required/>
 				    <label for="phone_num" data-clear-btn="true"><strong>Phone number:</strong></label>
-				    <input id="phone" name="phone_num" type="text" data-clear-btn="true" placeholder="123-456-789"/>
+				    <input id="phone" name="phone_num" type="tel" data-clear-btn="true" placeholder="123-456-789"/>
 				    <label for="account_name" data-clear-btn="true"><strong>Email:</strong></label>
-				    <input id="signup-email" name="account_name" type="email" data-clear-btn="true" placeholder="name@gmail.com"/>
+				    <input id="signup-email" name="account_name" type="email" data-clear-btn="true" placeholder="name@gmail.com" required/>
 				    <label for="pwd"><strong>Password:</strong></label>
-				    <input id="signup-pwd" name="pwd" type="password"/>
+				    <input id="signup-pwd" name="pwd" type="password" required/>
 				</form>			
 				<button id="signup-submit" class="ui-shadow ui-btn" data-theme="a">Sign Up</button>	
 				</div>
@@ -125,21 +126,6 @@
 	<!-- Main Page -->
 		
 	<div data-role="page" id="main-page" data-theme="a">
-		<!-- Navigation Panel -->
-		<!--div data-role="panel" id="navi-panel" data-display="reveal" data-theme="a">
-			<div data-role="header" data-position="inline">
-				<h1>Menu</h1>
-				
-				<a href='#main-page' data-rel="close">Close</a>
-			</div>
-			
-			<ul id="navi-list" data-role="listview" data-inset="true" data-theme="b">
-			    <li data-role="list-divider">place holder</li>
-			    <li><a href="#bible-study">Bible Study Schedule</a></li>
-			    <li><a href="#ido">iDo</a></li>	  
-			    <li><a href="#prayer">Prayer</a></li>
-			</ul>
-		</div-->
 		<div data-role="header" data-position="inline">
 			<h1>iPhilia</h1>
 			<!-- a href="#navi-panel" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-bars">Menu</a-->
@@ -165,7 +151,7 @@
 				 </div>
 				
 			</section>	
-			<section id='ido'>
+			<!-- section id='ido'-->
 				<h1>iGo</h1>
 				<!-- div class='ui-nodisc-icon'>
 					<a href="#" id='btn-next' class="swipe ui-btn ui-alt-icon ui-corner-all ui-icon-carat-r ui-btn-icon-notext ui-btn-inline">Next</a>
@@ -178,8 +164,13 @@
 						<li>3</li>
 					</ul>
 				</div-->
-			</section>
-			<section id='prayer'><h1>We Pray</h1></section>		
+			<!-- /section-->
+			<section id='prayer'>
+			  <h1>We Pray</h1>
+			  <p>This is a online praying section where allows you to submit your pray intention
+			     also view other people's prayers so we can pray for each other. Once your prayer is submitted, others might read it and pray for you right away.
+			  </p>
+			</section>		
 		</div>
 	</div>
 	<!-- Event Detail Page -->		
