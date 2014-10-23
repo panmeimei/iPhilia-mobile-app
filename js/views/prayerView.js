@@ -1,10 +1,9 @@
 var app = app||{};
 
 app.PrayerForm = Backbone.View.extend({
-  el:'.prayer-form-wrapper',
   template:_.template($("#prayFormTemplate").html()),
   events:{'click a': 'save',
-	   'click .togglePrayer':'toggleForm'
+	   'click .ui-radio':'toggleRadioBtn'
   },
   initialize:function(){
 	  this.render();
@@ -13,24 +12,21 @@ app.PrayerForm = Backbone.View.extend({
 	  this.$el.html(this.template(this.model.attributes));
 	  return this;
   },
-  toggleForm: function(){
-	$('.prayer-form').slideToggle('slow');  
+  toggleRadioBtn:function(e){
+	  $('.ui-radio > label').removeClass('ui-btn-active');
+	  $(e.currentTarget).find('label').addClass('ui-btn-active');
   },
-  save:function(e){
-    e.preventDefault();
-    var subject = this.$('input[name="subject"]').val();
-    var content = this.$('textarea[name="content"]').val();
-    var from = this.$('input[name="from"]:checked').val();
-    this.model.save({from:from, subject:subject, content:content}, {
-    	success:function(model, response, options){
-    		console.log('prayer saved');
-    		$('.prayer-form').slideUp();
-    	},
-    	error:function(model,xhr, options){
-    		var errors = JSON.parse(xhr.responseText).errors;
-    		alert('Oops, something went wrong with saving the prayer: ' + errors);
-    	}
-    });
+  save:function(e){  
+	  e.preventDefault();
+	  var subject = this.$('input[name="subject"]').val();
+	  var content = this.$('textarea[name="content"]').val();
+	  var from = this.$('input[name="from"]:checked').val();
+	  this.model.savePrayer(from, subject, content);
+	  this.removeView();
+  },
+  removeView:function(){
+	  this.model.stopListening();
+	  this.remove();
   }
   	
 });

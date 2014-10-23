@@ -83,16 +83,27 @@
 			</div>		   
 	   </script>
 	   <script id="prayFormTemplate" type="text/template">	       
-		       <h3 class='togglePrayer'>Spread your prayer</h3>
-			    <form class='prayer-form'> 	 
-			     <label for='subject'>Subject</label><input name='subject' type='text' placeholder='Peaceful world' value=<%= subject %>>
-			  	 <label for='content'>Content</label>
-				 <textarea name='content' form='prayer-form' placeholder='Write your prayer here...' value=<%= content %>></textarea>	 
-				 <label>From</label>	     						             
-				   <input type='radio' name='from' id='anonymous'  value='anonymous'/><label class='inline' for='anonymous'>Anonymous</label>
-				   <input type='radio' name='from' id='userName' value=<%= from %> checked="checked"/><label for='userName' class='capitalize inline'><%= from %></label>			    			     
-			     <a class='ui-btn ui-corner-all'>Save</a>
-		        </form>	    
+	    <h3 class='togglePrayer'>Spread your prayer</h3>
+        <form class="prayer-form"> 	 
+		  <label for="subject">Subject</label>
+		  <div class="ui-body-inherit ui-corner-all ui-shadow-inset">
+		    <input name="subject" type="text" placeholder="Peaceful world" value=<%= subject %>>
+		  </div>
+		  <label for="content">Content</label>
+		  <textarea name="content" form="prayer-form" placeholder="Write your prayer here..."  class="ui-shadow-inset ui-body-inherit ui-corner-all ui-textinput-autogrow" style="height: 51px;" value=<%= content %>></textarea>	 
+		  <label>From</label>	     						             
+		  
+
+	
+<fieldset data-role="controlgroup" data-type="horizontal" class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all">
+  <div class="ui-controlgroup-controls ">			
+	<div class="ui-radio"><label class="inline ui-btn ui-corner-all ui-btn-inherit ui-first-child ui-btn-active ui-radio-on" for="anonymous">Anonymous</label><input type="radio" name="from" id="anonymous" value="anonymous" data-cacheval="false"></div>		    
+	<div class="ui-radio"><label for="userName" class="capitalize inline ui-btn ui-corner-all ui-btn-inherit ui-last-child ui-radio-off"><%= from %></label><input type="radio" name="from" id="userName" value=<%= from %> checked="checked" data-cacheval="true"></div>		
+  </div>
+</fieldset>
+	    			     
+		  <a class="ui-btn ui-corner-all">Save</a>
+		</form>	     
 	   </script>
        <!-- Log In Page -->
 	<div data-role="page" id="login-page" data-theme="a">
@@ -183,13 +194,13 @@
 				</div-->
 			<!-- /section-->
 			<section id='prayer-sec'>
-			  <h1>We Pray</h1>
-			  <p>This is a online praying section where allows you to submit your pray intention
-			     also view other people's prayers so we can pray for each other. Once your prayer is submitted, others might read it and pray for you right away.
-			  </p>
-			  
+			  <div class='pray-intro'>
+			    <h1>We Pray</h1>
+			    <p>Submit your prayer to have our community pray for you</p>
+			    <a href='#' class='show-pray-form'>Start to spread your prayer</a>
+			  </div>
 			  <div class='prayer-form-wrapper'> 
-			    
+			     
 			  </div>
 			  
 			</section>		

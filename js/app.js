@@ -21,8 +21,16 @@ var app = {
 			this.user = user;			
 			new app.BibleSectionView();			
 			new app.EventsView();
-			var prayer = new app.Prayer({from:user.firstName, subject:'', content:''});
-			var prayform = new app.PrayerForm({model:prayer});			
+			//render prayer form 
+			$('a.show-pray-form').on('click', function(e){
+				e.preventDefault();
+				var prayer = new app.Prayer({from:user.firstName, subject:'', content:''});
+				var form = new app.PrayerForm({model:prayer}).render();	
+				$('.prayer-form-wrapper').html(form.el);
+				$('.prayer-form-wrapper').hide().fadeIn('slow');
+				$(e.currentTarget).hide();
+			});
+					
 		},
 		bindEvents: function(){
 			document.addEventListener('deviceready', this.onDeviceReady, false);		
@@ -31,7 +39,7 @@ var app = {
 			document.addEventListener('backbutton', this.onBackKeyDown, false);		
 		},
 		onBackKeyDown: function(){
-			if($.mobile.activePage[0].id === 'login-page'){
+			if($.mobile.activePage[0].id === 'login-page'||$.mobile.activePage[0].id === 'main-page'){
 				navigator.app.exitApp();
 			}
 		},
