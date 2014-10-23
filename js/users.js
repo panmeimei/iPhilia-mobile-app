@@ -17,7 +17,7 @@ $(document).ready(function(){
 		$('#signup-pwd').val('');
 		$('#signup-email').val('');
 		$('#fname').val('');
-		$('#lname').val('');
+		$('#lname').val('');		
 	});
 	
 });
@@ -64,7 +64,7 @@ var LogIn = function(){
 		contentType: "application/json",
 		success:prepProfile,
 		error: function(){
-			console.log("something wrong..."+$("#login-email").val());
+			//console.log("something wrong..."+$("#login-email").val());
 			$("#login-error-msg").popup('open');},
 		complete: function(){console.log("request complete");}
 	});

@@ -20,7 +20,9 @@ var app = {
 			//clear page			
 			this.user = user;			
 			new app.BibleSectionView();			
-			new app.EventsView();	
+			new app.EventsView();
+			var prayer = new app.Prayer({from:user.firstName, subject:'', content:''});
+			var prayform = new app.PrayerForm({model:prayer});			
 		},
 		bindEvents: function(){
 			document.addEventListener('deviceready', this.onDeviceReady, false);		

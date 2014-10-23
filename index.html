@@ -20,33 +20,38 @@
     </head>
     <body>
    	 	<script id="bibleStudyTemplate" type="text/template">			
-			<h2>Upcoming Bible Study</h2>
-			<h1><%= date %></h1>	
-			<p style="width:20em; margin: 0 auto;">Our bible study is held every two weeks. Our host family <%= host %> will 
-			 kindly prepare delicious dinner and provide space for iPhilia young adults. 
-			We are warmly welcome your join.</p>
-					   
+	      <div class='bible-slider-1'>
+			<h1>Upcoming Bible Study</h1>
+			<h2>Gospel of Luck Chapter 7</h2>
+			<div class='inline'>
+              <h1><%= date %></h1>
+            </div>	<div class='time inline'>
+  			  5pm: Young Couple Groups <br>
+			  7:30pm: Young Adults
+			</div>
+			<p class='bible-study-intro'>Every other Saturday night, we gather at a house behind St.Joseph church.
+			  Our community warmly welcome you and your friends' join.</p>
+		  </div>		   
 	   </script>
 	   <script id="bibleStudyTemplate2" type="text/template">			
-		  <h2>We will meet you here!</h2>	 
+		  <h2 class='bible-slider-2'>We will meet you here!</h2>	 
 		  <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC93IlFMRZNCIOb5cx1qMHAkceVeiRBtTk&q=<%= googleAddr %>&zoom=15"></iframe>									   
-	   	  <div>address: <%= street %>, <%= city %>, <%= state %></div>
+	   	  <h2>address: <%= street %>, <%= city %>, <%= state %></h2>
 	   </script>
-	   <script id="bibleStudyTemplate3" type="text/template">	
-			<h2>Are going to join us?</h2>
-			<em>Reply by <%= replyBy %>	</em>
-			<p>Contact our host family for details: <%= phone %></p>	
-			<div class='margin5'>
+	   <script id="bibleStudyTemplate3" type="text/template">		  	
+	     <h2 class='bible-slider-3'>Are going to join us?</h2>
+		 <em>Reply by <%= replyBy %></em>
+		 <div class='margin5'>Contact Emily or BJ for details: <%= phone %></div>	
+		 <div class='margin5'>
 	    		<a data-rsvp='yes' class='rsvp-btn ui-btn ui-btn-inline ui-corner-all'>Yes, see you there.</a>
 			<a  data-rsvp='no' class='rsvp-btn ui-btn ui-btn-inline ui-corner-all'>Sorry I can't make it.</a></br>	
-		   	</div>
-					   
+		 </div>	   
 	   </script>
 	   <script id="eventTemplate" type="text/template">
 			<a href="#event-detail-page" data-transition='slide' class='event-btn ui-btn ui-shadow ui-corner-all' data-id=<%= eventId %>>
 				<img alt='bible event' src='http://media-cache-ec0.pinimg.com/736x/4d/15/bf/4d15bf89268e28d7af23a89cf122735a.jpg'></img>
-				<p><%= eventTitle %><br>
-				<%= eventTime%></p>
+				<div><%= eventTitle %><br>
+				<%= eventTime%></div>
 			</a>
 	   </script>
 	   <script id="eventDetailTemplate" type="text/template">
@@ -71,11 +76,23 @@
 					<div><%= eventHost %></div>
 				</div>
 				<div><hr></div>
+				<div class='cancel-event'><button class='cancel-btn'>Cancel my attendence</button></div>
 			</div>
 			<div class='event-map'>
 				<iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC93IlFMRZNCIOb5cx1qMHAkceVeiRBtTk&q=<%= googleAddr %>&zoom=15"></iframe>
-			</div>	
-	   
+			</div>		   
+	   </script>
+	   <script id="prayFormTemplate" type="text/template">	       
+		       <h3 class='togglePrayer'>Spread your prayer</h3>
+			    <form class='prayer-form'> 	 
+			     <label for='subject'>Subject</label><input name='subject' type='text' placeholder='Peaceful world' value=<%= subject %>>
+			  	 <label for='content'>Content</label>
+				 <textarea name='content' form='prayer-form' placeholder='Write your prayer here...' value=<%= content %>></textarea>	 
+				 <label>From</label>	     						             
+				   <input type='radio' name='from' id='anonymous'  value='anonymous'/><label class='inline' for='anonymous'>Anonymous</label>
+				   <input type='radio' name='from' id='userName' value=<%= from %> checked="checked"/><label for='userName' class='capitalize inline'><%= from %></label>			    			     
+			     <a class='ui-btn ui-corner-all'>Save</a>
+		        </form>	    
 	   </script>
        <!-- Log In Page -->
 	<div data-role="page" id="login-page" data-theme="a">
@@ -85,7 +102,7 @@
 		<div id='icon'>
 			<img alt="" src="icon.png">
 			<h1>iPhilia</h1>
-			<p>A Catholic young adult group at Fremont, CA</p>
+			<div>A Catholic young adult group at Fremont, CA</div>
 		</div>
 		<div class="ui-content">
 				<form>	    
@@ -165,11 +182,16 @@
 					</ul>
 				</div-->
 			<!-- /section-->
-			<section id='prayer'>
+			<section id='prayer-sec'>
 			  <h1>We Pray</h1>
 			  <p>This is a online praying section where allows you to submit your pray intention
 			     also view other people's prayers so we can pray for each other. Once your prayer is submitted, others might read it and pray for you right away.
 			  </p>
+			  
+			  <div class='prayer-form-wrapper'> 
+			    
+			  </div>
+			  
 			</section>		
 		</div>
 	</div>
@@ -182,12 +204,13 @@
 		<div class="ui-content"></div>
 	</div>
         <script src="cordova.js"></script>
+        <script src="js/users.js"></script>
         <script src="js/app.js"></script>
         <script src="js/models/bibleModel.js"></script>       
         <script src="js/views/bibleView.js"></script>
         <script src="js/views/iGoView.js"></script>
         <script src="js/views/eventView.js"></script>
-        <script src="js/users.js"></script>
+        <script src="js/views/prayerView.js"></script>       
         <script src="js/collections/bibleCollection.js"></script>        
         <script src="js/slider.js"></script>
     </body>

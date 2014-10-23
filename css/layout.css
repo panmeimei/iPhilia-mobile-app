@@ -1,17 +1,26 @@
 @CHARSET "UTF-8";
 
 li{list-style:none;}
+p{
+  text-indent: 40px;
+  text-align:justify;
+}
 section{
 	height:100%;
 	overflow-y:hidden;
 	text-align:center;
-	margin:0% auto;
+	margin:0 auto;
+	margin-bottom:1em;
 }
 .ui-content{
 	margin: 0 auto;	
 }
-
-
+.capitalize{
+	text-transform:capitalize;
+}
+.inline{
+	display:inline-block;
+}
 h1{
 	font-size:2.5em;
 	margin:0.3em;
@@ -37,6 +46,12 @@ h1{
 	padding:1em;
 }
 /*Bible section*/
+#bible-study p.bible-study-intro{
+  margin:0 auto;
+  padding:0 2em;
+  max-width:26em;
+  font-style:italic;
+}
 iframe{	
 	width:100%;
 	height:450px;
@@ -70,7 +85,6 @@ a#bible-next, a#bible-prev{
 	overflow:hidden;
 	width:100%;
 	height:100%;
-	
 }
 #slider, #bible-slider{
 	position:relative;
@@ -94,14 +108,17 @@ a#bible-next, a#bible-prev{
 	background-color:#6de9bc;
 	color:#fff;
 }
-#bible-slider li:nth-child(1) h2{
-	margin-top:400px;
-}
-#bible-slider li:nth-child(3) h1{
+.bible-slider-1{
 	margin-top:300px;
 }
-#bible-slider li:nth-child(3) h2{
-	margin-top:130px;
+.bible-slider-1 .time{
+	text-align:left;
+	font-size:1.2em;
+	border-left:1px solid #fff;
+	padding-left:15px;
+}
+.bible-slider-3{
+	margin-top:220px;
 }
 .margin5{
 	margin:5%;
@@ -114,14 +131,15 @@ a#bible-next, a#bible-prev{
 	#bible-slider li{
 		height:400px;
 	}	
-	#bible-slider li:nth-child(1) h2{
-		margin-top:20%;
+	#bible-slider .bible-slider-1{
+		margin-top:100px;
+		font-size:70%;
 	}
-	#bible-slider li:nth-child(3) h1{
-		margin-top:130px;
+	#bible-slider .bible-slider-2{
+	  font-size:75%;
 	}
-	#bible-slider li:nth-child(3) h2{
-		margin-top:15%;
+	#bible-slider .bible-slider-3{
+		margin-top:100px;
 	}
 	a#bible-next, a#bible-prev{
 		top:200px;
@@ -163,6 +181,16 @@ default is 4 columns*/
 }
 
 /*Individual event view*/
+.cancel-btn{
+	color:#fff;
+	border-radius:8px;
+	background:-webkit-gradient(linear, left top, left bottom, from(#E34226), to(#943C22));
+	border:1px solid #943C22;
+	font-weight:bold;
+	text-shadow:0 1px 1px rgba(0,0,0,0.2);
+	padding:5px 10px;
+	cursor:pointer;
+}
 #event-detail-page .ui-content{
 	background-color:#f5f5f5;
 }
@@ -194,7 +222,7 @@ default is 4 columns*/
 	width:70%;
 }
 #event-detail-page .event-detail>div{margin-bottom:2em;}
-#event-detail-page .event-detail .description{text-align:center;}
+#event-detail-page .event-detail .description, .cancel-event{text-align:center;}
 #event-detail-page .event-detail .ui-block-a{
 	color:#6de9bc;
 }
@@ -202,5 +230,44 @@ default is 4 columns*/
 	width:100%;
 }
 
+/*pray section*/
+#prayer-sec{height:800px;}
+#prayer-sec p, #prayer-sec form{
+  padding:2em;	
+  text-align:left;
+}
+.prayer-form-wrapper{
+	margin:1em;
+}
+.prayer-form{
+	border-bottom-right-radius:8px;
+	border-bottom-left-radius:8px;
+	background-color:#f5f5f5;
+//	display:none;	
+}
+.prayer-form label{
+	margin-top:1em;
+}
+.prayer-form input[type='text']{
+	border-radius:.6em;
+	width:100%;
+	color:#333333;
+	border-color:#dddddd;
+}
+
+#prayer-sec h3{
+	background-color:#6de9bc;
+	border-top-left-radius:8px;
+	border-top-right-radius:8px;
+	padding:5px auto;
+	margin-bottom:0;
+	line-height:3em;
+	color:#fff;
+	cursor:pointer;
+}
+#prayer-sec a{
+	background-color:#6de9bc;
+	color:#fff;
+}
 
 

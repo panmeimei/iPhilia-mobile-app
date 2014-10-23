@@ -10,24 +10,22 @@ app.EventsView = Backbone.View.extend({
 	},
 	initialize:function(){
 		_.bindAll(this, 'render', 'renderEach' );			
-		app.userEvents = new app.AttendeeCollection();
+		app.userEvents = new app.AttendeeCollection({parse:true});
 		app.userEvents.fetch({
 			reset:true,
 			data: {
-				/*constrain should be done on server, it's inefficient to load whole table of data*/
 					"where":{
 						'eventTime':{"$gte":{"__type":"Date", "iso": new Date().toISOString()}},
 						'userId':user.getUserId(),
 						'rsvp':'yes'
-					},
-					
-					"order":"date",//in decending order
+					}
 			       }, 	
 			success:this.render,
 			error:function(err){console.log('error/backone  '+err);}
 		});
 		//render an event when new event is replied
-		app.userEvents.on( 'add', this.addEvent, this);
+		//app.userEvents.on( 'add', this.addEvent, this);
+		this.listenTo(app.userEvents, 'add', this.addEvent);
 		
 	},	
 	displayEventDetail: function(event){		
@@ -35,20 +33,24 @@ app.EventsView = Backbone.View.extend({
 		//alert(eventBox.data('id'));
 		var eventDetailView = new app.EventDetailView({id:eventId});
 	},
+	removeEvent:function(model){
+		app.userEvents.remove(model);
+		this.render();
+	},
 	addEvent:function(model){
 		if(model.get('rsvp')==='yes'){
 			this.renderEach(model);
 		}
 	},
 	render: function(){
-		this.$el.html('');
-		_.each(app.userEvents.models, function(model){
+		if(app.userEvents.length === 0)
+		  this.$el.html('You didn\'t sign up for any events.');
+		else{
+		  this.$el.html('')
+		  _.each(app.userEvents.models, function(model){
 			this.renderEach(model);
-		},this);
-	/*	_.each(this.collection.models[0].attributes.results,function(model){
-			this.renderEach(model);
-		},this);*/
-	
+		  },this);
+		}
 	},
 	renderEach:function(item){
 		var eventView = new app.EventView({model:item});
@@ -58,6 +60,9 @@ app.EventsView = Backbone.View.extend({
 app.EventView = Backbone.View.extend({
 	tagName:'div',
 	template: _.template($('#eventTemplate').html()),	
+	initialize:function(){
+		this.listenTo(this.model, 'change:rsvp', this.removeView);
+	},
 	render: function(){
 		this.$el.html(this.template({
 			//eventId will be stored in button's data attribute for retrieving corresponding data
@@ -66,31 +71,37 @@ app.EventView = Backbone.View.extend({
 			eventTime: parseDate(this.model.get('eventTime').iso)[0]
 		}));
 		return this;
+	},
+	removeView:function(model){
+		model.stopListening();
+		this.remove();
 	}
 });
 app.EventDetailView = Backbone.View.extend({
 	el: $('#event-detail-page .ui-content'),
 	template: _.template($('#eventDetailTemplate').html()),
+	events:{
+		'click .cancel-btn':'changeRSVP'
+	},
 	initialize: function(data){
 		_.bindAll(this, 'render');
-		this.collection = new app.BibleCollection();
-		this.collection.fetch({
+		this.model = new app.BibleStudySchedule();
+		this.model.fetch({
 			reset:true,
 			data: {"where":{'objectId': this.id}}, 			
 			success:this.render,
 			error:function(err){console.log('error from event detail  '+err);}
 		})
 	},
-	render: function(){
-		var model = this.collection.models[0];
-	//	console.log('event we retrived:  '+this.collection.length+ this.collection.models[0].get('host'));
+	render: function(model){
+		var model = this.model;
 		var city = model.get('city');
 		var state = model.get('state');
 		var street=model.get('street');
 		var zipcode = model.get('zipCode');
 		this.$el.html(this.template({
 			eventTitle : model.get('eventTitle'),
-			eventTime : parseDate(model.get('date').iso)[0],
+			eventTime : parseDate(model.get('date').iso).join(' '),
 			street:street,
 			city: city,
 			state: state,
@@ -101,5 +112,11 @@ app.EventDetailView = Backbone.View.extend({
 			setTimeout(function(){
 			$('.event-pic').find('.event-title').animate({"left":"0px"},'slow');
 		},1000);
+	},
+	changeRSVP:function(){
+		var event = app.userEvents.where({eventId: this.id});
+		event[0].set('rsvp','no');
+		event[0].save();
+		$.mobile.navigate("#main-page");
 	}
 });

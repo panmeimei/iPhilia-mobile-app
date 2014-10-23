@@ -16,53 +16,46 @@ var renderRsvpView = null;
 app.BibleSectionView = Backbone.View.extend({
 	el:'#bible-slider',
 	initialize: function(){			
-		_.bindAll(this, 'render', 'renderEach', 'fetchResponse');		
-		this.collection = new app.BibleCollection();		
-		this.collection.fetch({
+		_.bindAll(this, 'render', 'setRsvpView', 'fetchResponse');		
+		this.bibleStudy = new app.BibleStudySchedule({parse:true});		
+		this.bibleStudy.fetch({
 			reset:true,
 			data: {
-				/*constrain should be done on server, it's inefficient to load whole table of data*/
 					"where":{'date':{"$gte":{"__type":"Date", "iso": new Date().toISOString()}}},
 					"limit":"1",
 					"order":"date",//in decending order
-			       }, 
-			
+			       }, 		
 			success:this.fetchResponse,
 			error:function(err){console.log('error/backone  '+err);},
-
 		});				
 	},
-/*Query 'AttendeeList' to see if any record matches userId and eventId*/
+/*Query 'AttendeeList' to see if any record matches userId and eventId.
+ * if the user is found in AttendeeList, RSVP will not be shown. Contrarily,
+ * RSVP will be shown to users who have not replied.*/
 	fetchResponse:function(){
-		this.eventId = this.collection.at(0).get('objectId');
-		this.attendees = new app.AttendeeCollection();
+		this.eventId = this.bibleStudy.id;
+		this.attendees = new app.AttendeeCollection({parse:true});
 		this.attendees.fetch({
 			reset:true,
 			data: {
-				/*constrain should be done on server, it's inefficient to load whole table of data*/
 					"where":{'userId':user.getUserId(), 'eventId': this.eventId}				
 			       }, 	
-			success:this.render ,
+			success:this.setRsvpView,			
 			error:function(err){console.log('from check response '+err);}
-		});				
+		});			
 	},
-	render: function(){
+	setRsvpView: function(collection){
 		renderRsvpView=true;
 		//set renderRsvpView to false if user has replied to the event		
-		if( this.attendees.length)
-			renderRsvpView = false;	
+		if(collection.length)
+			renderRsvpView=false;
 		$('#bible-slider').html('');	
-			//_.each(list, iterator, [context])
-	/*	_.each(this.collection.models, function(model){		
-				this.renderEach(model);//in query constraint, only one result will be returned		
-			},this);*/
-		this.renderEach(this.collection.at(0));
-		//this.eventId = this.collection.models[0].get('objectId');			
+		this.render();
 	},
-	renderEach: function(item){
-		var dateView = new app.DateView({model:item});
-		var locationView = new app.LocationView({model:item});
-		var rsvpView = new app.RsvpView({model:item});
+	render: function(){
+		var dateView = new app.DateView({model:this.bibleStudy});
+		var locationView = new app.LocationView({model:this.bibleStudy});
+		var rsvpView = new app.RsvpView({model:this.bibleStudy});
 		this.$el.append(dateView.render().el);		
 		this.$el.append(locationView.render().el);		
 		this.$el.append(rsvpView.render().el);
@@ -81,8 +74,8 @@ app.DateView = Backbone.View.extend({
 		//need to parse date and street before rendering
 		var date = parseDate(this.model.get('date').iso);		
 		this.$el.html(this.template({				
-			date: date[0]+'  '+date[1],
-			host: this.model.get('host'),					
+			date: date[0]
+			//host: this.model.get('host'),					
 		}));
 		return this;
 	}
@@ -119,7 +112,7 @@ app.RsvpView = Backbone.View.extend({
 	addAttendee: function(event){
 		//trigger EventsView's 'add' event
 		app.userEvents.create({
-			eventId:this.model.get('objectId'),
+			eventId:this.model.id,
 			eventTitle: 'Bible Study',
 			eventTime: this.model.get('date'),
 			userId: user.getUserId(),
@@ -128,12 +121,12 @@ app.RsvpView = Backbone.View.extend({
 			//rsvp determines whether we add this event to the event list or not
 			rsvp:$(event.target).data('rsvp') 
 		});
-		$('#rsvp-view').hide().html("<h1>Thank you! We hope to see you soon.</h1>").fadeIn('slow');
+		$('#rsvp-view').hide().html("<h1 class='bible-slider-3'>Thank you! We hope to see you soon.</h1>").fadeIn('slow');
 	},
 	/*render RSVP view. It will first check if user has replied to the bible study with 'renderRsvpView'*/
 	render:function(){		
 		if(!renderRsvpView){			
-			this.$el.html("<h1>Thank you! We hope to see you soon.</h1>");
+			this.$el.html("<h1 class='bible-slider-3'>Thank you! We hope to see you soon.</h1>");
 		}else{
 			var replyBy = parseDate(this.model.get('replyBy').iso);	
 			this.$el.html(this.template({

@@ -7,9 +7,6 @@ var app = app||{};
 app.BibleCollection = Backbone.Collection.extend({
 	model:app.BibleStudySchedule,
 	url:"https://api.parse.com/1/classes/BibleStudySchedule",
-	//parse is called by Backbone whenever a collection's models are 
-	//returned by the server, in fetch. The function is passed the
-	//raw response object, and should return the array of model attributes
 	parse:function(response){
 		return response.results;
 	}
@@ -19,6 +16,9 @@ app.AttendeeCollection = Backbone.Collection.extend({
 	url: "https://api.parse.com/1/classes/AttendeeList",
 	parse:function(response){
 		return response.results;
+	},
+	comparator:function(a,b){
+		return a.get('date') < b.get('date');
 	}
 });
 app.UserCollection = Backbone.Collection.extend({
@@ -28,4 +28,10 @@ app.UserCollection = Backbone.Collection.extend({
 		return response.results;
 	}
 });
-
+app.Prayers = Backbone.Collection.extend({
+	model: app.Prayer,
+	url:"https://api.parse.com/1/classes/Prayers",
+	parse:function(response){
+		return response.results;
+	}
+});
