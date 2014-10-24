@@ -2,7 +2,9 @@ var app = app||{};
 
 app.PrayerForm = Backbone.View.extend({
   template:_.template($("#prayFormTemplate").html()),
-  events:{'click a': 'save',
+  events:{
+	  'click a': 'save',
+	   submit:'save',
 	   'click .ui-radio':'toggleRadioBtn'
   },
   initialize:function(){
@@ -22,7 +24,6 @@ app.PrayerForm = Backbone.View.extend({
 	  var content = this.$('textarea[name="content"]').val();
 	  var from = this.$('input[name="from"]:checked').val();
 	  this.model.savePrayer(from, subject, content);
-	  this.removeView();
   },
   removeView:function(){
 	  this.model.stopListening();

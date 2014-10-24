@@ -10,7 +10,7 @@ app.EventsView = Backbone.View.extend({
 	},
 	initialize:function(){
 		_.bindAll(this, 'render', 'renderEach' );			
-		app.userEvents = new app.AttendeeCollection({parse:true});
+		app.userEvents = new app.Attendees({parse:true});
 		app.userEvents.fetch({
 			reset:true,
 			data: {
@@ -52,7 +52,7 @@ app.EventsView = Backbone.View.extend({
 		  },this);
 		}
 	},
-	renderEach:function(item){
+	renderEach:function(item){		
 		var eventView = new app.EventView({model:item});
 		this.$el.append(eventView.render().el);
 	}
@@ -81,11 +81,11 @@ app.EventDetailView = Backbone.View.extend({
 	el: $('#event-detail-page .ui-content'),
 	template: _.template($('#eventDetailTemplate').html()),
 	events:{
-		'click .cancel-btn':'changeRSVP'
+		'click .cancel-btn':'cancel'
 	},
 	initialize: function(data){
 		_.bindAll(this, 'render');
-		this.model = new app.BibleStudySchedule();
+		this.model = new app.BibleEvent();
 		this.model.fetch({
 			reset:true,
 			data: {"where":{'objectId': this.id}}, 			
@@ -113,10 +113,9 @@ app.EventDetailView = Backbone.View.extend({
 			$('.event-pic').find('.event-title').animate({"left":"0px"},'slow');
 		},1000);
 	},
-	changeRSVP:function(){
-		var event = app.userEvents.where({eventId: this.id});
-		event[0].set('rsvp','no');
-		event[0].save();
+	cancel:function(){
+		this.model.cancel();
+	
 		$.mobile.navigate("#main-page");
 	}
 });

@@ -25,10 +25,7 @@ var app = {
 			$('a.show-pray-form').on('click', function(e){
 				e.preventDefault();
 				var prayer = new app.Prayer({from:user.firstName, subject:'', content:''});
-				var form = new app.PrayerForm({model:prayer}).render();	
-				$('.prayer-form-wrapper').html(form.el);
-				$('.prayer-form-wrapper').hide().fadeIn('slow');
-				$(e.currentTarget).hide();
+				prayer.createPrayer();
 			});
 					
 		},

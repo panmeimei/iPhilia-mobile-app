@@ -16,46 +16,29 @@ var renderRsvpView = null;
 app.BibleSectionView = Backbone.View.extend({
 	el:'#bible-slider',
 	initialize: function(){			
-		_.bindAll(this, 'render', 'setRsvpView', 'fetchResponse');		
-		this.bibleStudy = new app.BibleStudySchedule({parse:true});		
-		this.bibleStudy.fetch({
+		_.bindAll(this, 'render');		
+		this.bibleEvent = new app.BibleEvent({parse:true});		
+		var self = this;
+		this.bibleEvent.fetch({
 			reset:true,
 			data: {
 					"where":{'date':{"$gte":{"__type":"Date", "iso": new Date().toISOString()}}},
 					"limit":"1",
 					"order":"date",//in decending order
 			       }, 		
-			success:this.fetchResponse,
+			success:function(model, response, options){
+				var attendees = new app.Attendees({parse:true});
+				var hasFound = attendees.findUser(self, {userId: user.getUserId(), eventId: model.id});
+			},
 			error:function(err){console.log('error/backone  '+err);},
-		});				
-	},
-/*Query 'AttendeeList' to see if any record matches userId and eventId.
- * if the user is found in AttendeeList, RSVP will not be shown. Contrarily,
- * RSVP will be shown to users who have not replied.*/
-	fetchResponse:function(){
-		this.eventId = this.bibleStudy.id;
-		this.attendees = new app.AttendeeCollection({parse:true});
-		this.attendees.fetch({
-			reset:true,
-			data: {
-					"where":{'userId':user.getUserId(), 'eventId': this.eventId}				
-			       }, 	
-			success:this.setRsvpView,			
-			error:function(err){console.log('from check response '+err);}
-		});			
-	},
-	setRsvpView: function(collection){
-		renderRsvpView=true;
-		//set renderRsvpView to false if user has replied to the event		
-		if(collection.length)
-			renderRsvpView=false;
+		});	
 		$('#bible-slider').html('');	
-		this.render();
+		
 	},
-	render: function(){
-		var dateView = new app.DateView({model:this.bibleStudy});
-		var locationView = new app.LocationView({model:this.bibleStudy});
-		var rsvpView = new app.RsvpView({model:this.bibleStudy});
+	render: function(hasFound){
+		var dateView = new app.DateView({model:this.bibleEvent});
+		var locationView = new app.LocationView({model:this.bibleEvent});
+		var rsvpView = new app.RsvpView({model:this.bibleEvent, hasFound: hasFound});
 		this.$el.append(dateView.render().el);		
 		this.$el.append(locationView.render().el);		
 		this.$el.append(rsvpView.render().el);
@@ -100,13 +83,17 @@ app.LocationView = Backbone.View.extend({
 		return this;
 	}
 });
-/*Render rsvp view according to 'renderRsvpView' which is set at app.BibleSectionView*/
+
 app.RsvpView = Backbone.View.extend({
 	tagName: 'li',
 	id:'rsvp-view',
 	template: _.template($('#bibleStudyTemplate3').html()),
 	events:{
 		'click .rsvp-btn':'addAttendee'
+	},
+	initialize:function(options){
+	 /*Render rsvp view according to 'this.hasFound'*/
+	  this.hasFound = options.hasFound;
 	},
 	/*add the user to AttendeeList*/
 	addAttendee: function(event){
@@ -123,9 +110,8 @@ app.RsvpView = Backbone.View.extend({
 		});
 		$('#rsvp-view').hide().html("<h1 class='bible-slider-3'>Thank you! We hope to see you soon.</h1>").fadeIn('slow');
 	},
-	/*render RSVP view. It will first check if user has replied to the bible study with 'renderRsvpView'*/
 	render:function(){		
-		if(!renderRsvpView){			
+		if(this.hasFound){			
 			this.$el.html("<h1 class='bible-slider-3'>Thank you! We hope to see you soon.</h1>");
 		}else{
 			var replyBy = parseDate(this.model.get('replyBy').iso);	

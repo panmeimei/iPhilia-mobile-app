@@ -21,8 +21,8 @@
     <body>
    	 	<script id="bibleStudyTemplate" type="text/template">			
 	      <div class='bible-slider-1'>
-			<h1>Upcoming Bible Study</h1>
-			<h2>Gospel of Luck Chapter 7</h2>
+			<h1 class='title'>Upcoming Bible Study</h1>
+			<p class='subtitle'>Gospel of Luck Chapter 7</p>
 			<div class='inline'>
               <h1><%= date %></h1>
             </div>	<div class='time inline'>
@@ -34,15 +34,15 @@
 		  </div>		   
 	   </script>
 	   <script id="bibleStudyTemplate2" type="text/template">			
-		  <h2 class='bible-slider-2'>We will meet you here!</h2>	 
+		  <div class='bible-slider-2'>We will meet you here: <%= street %>, <%= city %>, <%= state %></div>	 
 		  <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyC93IlFMRZNCIOb5cx1qMHAkceVeiRBtTk&q=<%= googleAddr %>&zoom=15"></iframe>									   
-	   	  <h2>address: <%= street %>, <%= city %>, <%= state %></h2>
+	   	  
 	   </script>
 	   <script id="bibleStudyTemplate3" type="text/template">		  	
-	     <h2 class='bible-slider-3'>Are going to join us?</h2>
-		 <em>Reply by <%= replyBy %></em>
-		 <div class='margin5'>Contact Emily or BJ for details: <%= phone %></div>	
-		 <div class='margin5'>
+	     <h1 class='bible-slider-3'>Are going to join us?</h1>
+		 <p class='subtitle'><em>Reply by <%= replyBy %></em></p>
+		 <div>Contact Emily or BJ for details: <%= phone %></div>	
+		 <div>
 	    		<a data-rsvp='yes' class='rsvp-btn ui-btn ui-btn-inline ui-corner-all'>Yes, see you there.</a>
 			<a  data-rsvp='no' class='rsvp-btn ui-btn ui-btn-inline ui-corner-all'>Sorry I can't make it.</a></br>	
 		 </div>	   
@@ -83,7 +83,7 @@
 			</div>		   
 	   </script>
 	   <script id="prayFormTemplate" type="text/template">	       
-	    <h3 class='togglePrayer'>Spread your prayer</h3>
+	    <h3>Spread your prayer</h3>
         <form class="prayer-form"> 	 
 		  <label for="subject">Subject</label>
 		  <div class="ui-body-inherit ui-corner-all ui-shadow-inset">
@@ -91,17 +91,13 @@
 		  </div>
 		  <label for="content">Content</label>
 		  <textarea name="content" form="prayer-form" placeholder="Write your prayer here..."  class="ui-shadow-inset ui-body-inherit ui-corner-all ui-textinput-autogrow" style="height: 51px;" value=<%= content %>></textarea>	 
-		  <label>From</label>	     						             
-		  
-
-	
-<fieldset data-role="controlgroup" data-type="horizontal" class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all">
-  <div class="ui-controlgroup-controls ">			
-	<div class="ui-radio"><label class="inline ui-btn ui-corner-all ui-btn-inherit ui-first-child ui-btn-active ui-radio-on" for="anonymous">Anonymous</label><input type="radio" name="from" id="anonymous" value="anonymous" data-cacheval="false"></div>		    
-	<div class="ui-radio"><label for="userName" class="capitalize inline ui-btn ui-corner-all ui-btn-inherit ui-last-child ui-radio-off"><%= from %></label><input type="radio" name="from" id="userName" value=<%= from %> checked="checked" data-cacheval="true"></div>		
-  </div>
-</fieldset>
-	    			     
+		  <label>From</label>	     						             	
+		  <fieldset data-role="controlgroup" data-type="horizontal" class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all">
+  		    <div class="ui-controlgroup-controls ">			
+			<div class="ui-radio"><label class="inline ui-btn ui-corner-all ui-btn-inherit ui-first-child ui-btn-active ui-radio-on" for="anonymous">Anonymous</label><input type="radio" name="from" id="anonymous" value="anonymous" data-cacheval="false"></div>		    
+			<div class="ui-radio"><label for="userName" class="capitalize inline ui-btn ui-corner-all ui-btn-inherit ui-last-child ui-radio-off"><%= from %></label><input type="radio" name="from" id="userName" value=<%= from %> checked="checked" data-cacheval="true"></div>		
+  			</div>
+		  </fieldset>	    			     
 		  <a class="ui-btn ui-corner-all">Save</a>
 		</form>	     
 	   </script>
@@ -173,14 +169,14 @@
 				
 			</section>
 			<section id="event-sec">
-				 <h1>My Events</h1>
+				 <h1 class='title'>My Events</h1>
 				 <div id='event-list' class='event-grid' >
 				   
 				 </div>
 				
 			</section>	
 			<!-- section id='ido'-->
-				<h1>iGo</h1>
+				<h1 class='title'>iGo</h1>
 				<!-- div class='ui-nodisc-icon'>
 					<a href="#" id='btn-next' class="swipe ui-btn ui-alt-icon ui-corner-all ui-icon-carat-r ui-btn-icon-notext ui-btn-inline">Next</a>
 					<a href="#" id='btn-prev' class="swipe ui-btn ui-alt-icon ui-corner-all ui-icon-carat-l ui-btn-icon-notext ui-btn-inline">Prev</a>		
@@ -194,10 +190,13 @@
 				</div-->
 			<!-- /section-->
 			<section id='prayer-sec'>
+			  
 			  <div class='pray-intro'>
-			    <h1>We Pray</h1>
-			    <p>Submit your prayer to have our community pray for you</p>
-			    <a href='#' class='show-pray-form'>Start to spread your prayer</a>
+			    <h1 class='title'>We Pray</h1>
+			    <p class='subtitle'>Submit your prayer to have our community pray for you</p>
+			    <a href='#' class='show-pray-form'>Spread your prayer</a>
+			    <div class='success-msg'>Prayer has been saved.</div>
+			    <div class='error-msg'></div>
 			  </div>
 			  <div class='prayer-form-wrapper'> 
 			     

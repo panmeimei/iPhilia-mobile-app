@@ -4,14 +4,14 @@
 
 var app = app||{};
 
-app.BibleCollection = Backbone.Collection.extend({
-	model:app.BibleStudySchedule,
+app.BibleEvents = Backbone.Collection.extend({
+	model:app.BibleEvent,
 	url:"https://api.parse.com/1/classes/BibleStudySchedule",
 	parse:function(response){
 		return response.results;
 	}
 });
-app.AttendeeCollection = Backbone.Collection.extend({
+app.Attendees = Backbone.Collection.extend({
 	model: app.Attendee,
 	url: "https://api.parse.com/1/classes/AttendeeList",
 	parse:function(response){
@@ -19,13 +19,25 @@ app.AttendeeCollection = Backbone.Collection.extend({
 	},
 	comparator:function(a,b){
 		return a.get('date') < b.get('date');
-	}
-});
-app.UserCollection = Backbone.Collection.extend({
-	model: app.User,
-	url:"https://api.parse.com/1/users",
-	parse:function(response){
-		return response.results;
+	},
+	/*Query 'Attendees' to check if user has replied to the next bible study.*/
+	findUser: function(view, options){
+		var hasFound=false;
+		this.fetch({ 
+			reset:true,
+			data: {
+			  "where":{'userId':options.userId, 'eventId': options.eventId}				
+			}, 	
+			success:function(collection){	
+			  if(collection.length)
+				hasFound=true;
+			  view.render(hasFound);
+			},
+			error: function(model, xhr, options){
+				var errors = JSON.parse(xhr.responseText).errors;
+				alert(errors);
+			}
+		});
 	}
 });
 app.Prayers = Backbone.Collection.extend({
