@@ -36,7 +36,7 @@ var app = {
 			document.addEventListener('backbutton', this.onBackKeyDown, false);		
 		},
 		onBackKeyDown: function(){
-			if($.mobile.activePage[0].id === 'login-page'||$.mobile.activePage[0].id === 'main-page'){
+			if($.mobile.activePage.attr('id') === 'login-page'||$.mobile.activePage.attr('id') === 'main-page'){
 				navigator.app.exitApp();
 			}
 		},
