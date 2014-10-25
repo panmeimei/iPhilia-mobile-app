@@ -12,8 +12,8 @@ $(document).ready(function(){
 		$('#login-pwd').val('');
 		$('#login-email').val(localStorage.getItem('email'));
 		localStorage.removeItem("email");
-		var len = window.history.length;
-		window.history.go(-(len+1));
+		var len = window.history.length; 
+		window.history.go(-(len+1)); 
 	});
 	$('#join-btn').click(function(){
 		$('#signup-pwd').val('');
