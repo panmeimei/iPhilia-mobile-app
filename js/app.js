@@ -35,8 +35,9 @@ var app = {
 		onDeviceReady: function(){
 			document.addEventListener('backbutton', this.onBackKeyDown, false);		
 		},
-		onBackKeyDown: function(){
+		onBackKeyDown: function(e){
 			if($.mobile.activePage.attr('id') === 'login-page'||$.mobile.activePage.attr('id') === 'main-page'){
+				e.preventDefault();
 				navigator.app.exitApp();
 			}
 		},
