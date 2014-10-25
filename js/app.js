@@ -42,6 +42,6 @@ var app = {
 			}else{
 				navigator.app.backHistory();
 			}
-		},
+		}
 		
 };
