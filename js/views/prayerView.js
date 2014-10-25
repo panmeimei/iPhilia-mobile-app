@@ -5,7 +5,7 @@ app.PrayerForm = Backbone.View.extend({
   events:{
 	  'click a': 'save',
 	   submit:'save',
-	   'click .ui-radio':'toggleRadioBtn' 
+	   'click .ui-radio':'toggleRadioBtn'
   },
   initialize:function(){
 	  this.render();

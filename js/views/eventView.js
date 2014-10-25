@@ -112,7 +112,7 @@ app.EventDetailView = Backbone.View.extend({
 			setTimeout(function(){
 			$('.event-pic').find('.event-title').animate({"left":"0px"},'slow');
 		},1000);
-	},   
+	},
 	cancel:function(){
 		this.model.cancel();
 	
