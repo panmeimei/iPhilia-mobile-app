@@ -38,6 +38,21 @@ app.Attendees = Backbone.Collection.extend({
 				alert(errors);
 			}
 		});
+	},
+	addUserEvent:function(options){
+		app.userEvents.create({
+			eventId:options.eventId,
+			eventTitle: 'Bible Study',
+			eventTime: options.eventTime,
+			userId: user.getUserId(),
+			firstName:user.firstName,
+			lastName:user.lastName,
+			//rsvp determines whether we add this event to the event list or not
+			rsvp:options.rsvp
+		});  	
+	},
+	removeUserEvent:function(model){
+		app.userEvents.remove(model);
 	}
 });
 app.Prayers = Backbone.Collection.extend({

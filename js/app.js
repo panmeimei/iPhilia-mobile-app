@@ -19,9 +19,9 @@ var app = {
 		initialize:function(user){
 			//clear page			
 			this.user = user;			
-			new app.BibleSectionView();			
-			new app.EventsView();
-			//render prayer form 
+			this.bibleSectionView = new app.BibleSectionView();			
+			this.eventsView = new app.EventsView();
+			//create a prayer model
 			$('a.show-pray-form').on('click', function(e){
 				e.preventDefault();
 				var prayer = new app.Prayer({from:user.firstName, subject:'', content:''});
