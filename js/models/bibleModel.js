@@ -13,7 +13,6 @@ app.BibleEvent = Backbone.Model.extend({
 		var event = app.userEvents.where({eventId: this.id});
 		event[0].set('rsvp','no');
 		event[0].save();
-		app.userEvents.removeUserEvent(event[0]);
 	}
 });
 
@@ -30,16 +29,17 @@ app.Prayer = Backbone.Model.extend({
 	  });
 	},
 	createPrayer:function(){
-		app.formView = new app.PrayerForm({model:this}).render();	
-		$('.prayer-form-wrapper').html(app.formView.el);
+		this.form = new app.PrayerForm({model:this}).render();	
+		$('.prayer-form-wrapper').html(this.form.el);
 		$('.prayer-form-wrapper').hide().fadeIn('slow');
 		 $('a.show-pray-form').hide();
 	},
 	savePrayer:function(from,subject,content){
+		var form = this.form;
 		this.save({from:from, subject:subject, content:content}, {
 		    	success:function(model, response, options){
 		    		console.log('prayer saved');
-		    		app.formView.removeView();
+		    		form.removeView();
 		    		$('.success-msg').fadeIn('slow');	
 		    		$('.success-msg').delay(600).fadeOut('slow', function(){
 		    			$('a.show-pray-form').fadeIn();	

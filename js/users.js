@@ -73,8 +73,7 @@ var LogIn = function(){
 	    user = new User(json.firstname, json.lastname, json.objectId);	    
 	    app.initialize(user);
 	    localStorage.setItem("email", json.email);
-		$.mobile.navigate("index.html#main-page", {info: "going to #main-page"});
-	   
+		$.mobile.navigate("#main-page", {info: "going to #main-page"});
 	};
 };
 
