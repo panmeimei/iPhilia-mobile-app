@@ -91,7 +91,7 @@ app.RsvpView = Backbone.View.extend({
 	events:{
 		'click .rsvp-btn':'addAttendee'
 	},
-	initialize:function(options){
+	initialize:function(options){ 
 	 /*Render rsvp view according to 'this.hasFound'*/
 	  this.hasFound = options.hasFound;
 	},
