@@ -43,6 +43,10 @@ p{
 	text-align:center;
 }
 /*Login page*/
+#icon img{
+  width:30%;
+  margin:5em auto 0;
+}
 #login-page > .ui-content{
 	padding:2em;
 }

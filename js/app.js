@@ -38,7 +38,6 @@ var app = {
 		onBackKeyDown: function(e){
 			if($.mobile.activePage.is('#login-page')){
 				e.preventDefault();
-				alert('back button');
 				navigator.app.exitApp();
 			}else{
 				navigator.app.backHistory();
