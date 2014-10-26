@@ -27,7 +27,6 @@ var app = {
 				var prayer = new app.Prayer({from:user.firstName, subject:'', content:''});
 				prayer.createPrayer();
 			});
-			$("#login-error-msg").popup('open');
 					
 		},
 		bindEvents: function(){
@@ -38,7 +37,7 @@ var app = {
 		},
 		onBackKeyDown: function(e){
 			e.preventDefault();
-			$("#login-error-msg").popup('open');
+			navigator.app.exitApp();
 		/*	if($.mobile.activePage.is('#login-page')){				
 				navigator.app.exitApp();
 			}else{
