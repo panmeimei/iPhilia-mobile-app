@@ -33,7 +33,7 @@ var app = {
 			document.addEventListener('deviceready', this.onDeviceReady, false);		
 		},
 		onDeviceReady: function(){
-			document.addEventListener('backbutton', this.onBackKeyDown, false);		
+		//	document.addEventListener('backbutton', this.onBackKeyDown, false);		
 		},
 		onBackKeyDown: function(e){
 			if($.mobile.activePage.is('#login-page')){
