@@ -37,11 +37,12 @@ var app = {
 		},
 		onBackKeyDown: function(e){
 			e.preventDefault();
-			if($.mobile.activePage.is('#login-page')){				
+			alert('back clicked');
+		/*	if($.mobile.activePage.is('#login-page')){				
 				navigator.app.exitApp();
 			}else{
 				navigator.app.backHistory();
-			}
+			}*/
 		}
 		
 };
